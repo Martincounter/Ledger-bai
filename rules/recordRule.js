@@ -26,9 +26,34 @@ const validatorGetTimeRange = [
   body('endTime').notEmpty()
     .withMessage('结束时间不能为空'),
 ]
+const validatorUserCategory = [
+  body('type').notEmpty()
+    .withMessage('类型不能为空'),
+]
+const validatorSaveUserCategory = [
+  body('type').notEmpty()
+    .withMessage('类型不能为空'),
+  body('emojiId').notEmpty()
+    .withMessage('emojiId不能为空'),
+  body('emoji').notEmpty()
+    .withMessage('emoji不能为空'),
+  body('label').notEmpty()
+    .withMessage('label不能为空'),
+  body('categoryType').notEmpty()
+    .withMessage('categoryType不能为空'),
+]
+const validatorDeleteUserCategory = [
+  body('type').notEmpty()
+    .withMessage('类型不能为空'),
+  body('id').notEmpty()
+    .withMessage('id不能为空'),
+]
 module.exports = {
   validatorSave,
   validatorDelById,
   validatorFindById,
-  validatorGetTimeRange
+  validatorGetTimeRange,
+  validatorUserCategory,
+  validatorSaveUserCategory,
+  validatorDeleteUserCategory
 }

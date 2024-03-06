@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const DB_NAME = "bookKeeping";
-const DB_PORT = "27017";
-const DB_HOST = "127.0.0.1";
-const DB_USER = "martin";
-const DB_PASSWORD = "root4163";
+const DB_NAME = process.env.DB_NAME;
+const DB_PORT = process.env.DB_PORT;
+const DB_HOST = process.env.DB_HOST;
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
 const db = () => {
   return new Promise(async (resolve) => {
     try {
@@ -20,4 +20,5 @@ const db = () => {
     }
   });
 };
+
 module.exports = db;

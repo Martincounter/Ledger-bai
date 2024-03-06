@@ -9,6 +9,10 @@ const userRule = new userSchema({
     type: Date,
     default: Date.now(),
   },
+  isDeactivate: {
+    type: Number,
+    default: 0
+  }
 })
 // userRule.pre('sava', async)
 const UserModel = mongoose.model('user', userRule);
