@@ -1,15 +1,7 @@
 const jwt = require('jsonwebtoken')
 const { expressjwt } = require('express-jwt');
-// const { PRIVATE_KEY } = require('./constant')
 const utils = require('./index')
 
-// const getTokenFromHeader = (req) => {
-//   const authHeader = req.headers.authorization;
-//   if (authHeader && authHeader.split(' ')[0] === 'Bearer') {
-//     return authHeader.split(' ')[1];
-//   }
-//   return null;
-// };
 // 验证token是否过期
 const jwtAuth = expressjwt({
   // 设置密钥

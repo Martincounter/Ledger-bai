@@ -1,6 +1,7 @@
 const { CODE } = require('./constant')
 const UserModel = require("../models/userModel")
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit')
 const whitelist = [
   `${process.env.BASE_API}/register`,
   `${process.env.BASE_API}/login`
@@ -43,5 +44,15 @@ const extractUserId = async (req, res, next) => {
   }
   next()
 }
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15分钟
+  max: 1000, // 限制每个IP 15分钟内最多1000次请求
+  handler: (req, res) => {
+    res.status(429).json({
+      code: 429,
+      message: 'Custom error message: Too many requests, please try again later.'
+    });
+  }
+});
 
-module.exports = extractUserId
+module.exports = { extractUserId, limiter }

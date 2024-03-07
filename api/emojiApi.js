@@ -94,6 +94,53 @@ const deleteUserCategory = async (req, res, next) => {
 }
 
 /**
+ * 用户更新类别
+ * @param { Number } categoryType 区分添加的类别 0支出 1收入
+ * @param { String } label 类别名称
+ * @param { String } emoji 类别Emoji
+ * @param { String } emojiId 类别EmojiID
+ * @param { Number } type 类别
+ */
+const updateUserCategory = async (req, res, next) => {
+  const err = validationResult(req);
+  if (!err.isEmpty()) {
+    const [{ msg }] = err.errors
+    return next({ // 错误统一传递到中间件处理
+      code: CODE.CODE_ERROR,
+      message: msg
+    })
+  }
+  try {
+    const { categoryType, userId, _id, emoji, emojiId, type, label } = req.body
+    const collectionModel = categoryType ? model.userIncomeEmojiMapModel : model.userExpendEmojiMapModel;
+    const params = {
+      "emojis.$.emoji": emoji,
+      "emojis.$.emojiId": emojiId,
+      "emojis.$.type": type,
+      "emojis.$.label": label
+    }
+    const data = await collectionModel.findOneAndUpdate(
+      { userId: userId, "emojis._id": _id },
+      { $set: params },
+      { returnOriginal: false })
+    if (!data) {
+      return res.status(CODE.CODE_ERROR)
+        .json({
+          code: CODE.CODE_ERROR,
+          message: `未找到id为${id}的数据`,
+        });
+    }
+    return res.status(CODE.CODE_SUCCESS)
+      .json({
+        code: CODE.CODE_SUCCESS,
+        message: MSG.EDIT_SUCCESS,
+      });
+  } catch (err) {
+    next(err)
+  }
+}
+
+/**
  * 获取用户的支出或收入类别emoji
  * @param { Number } type 区分获取的emoji 0支出 1收入
  * */
@@ -150,5 +197,6 @@ module.exports = {
   getEmojiMap,
   getUserCategory,
   saveUserCategory,
-  deleteUserCategory
+  deleteUserCategory,
+  updateUserCategory
 }

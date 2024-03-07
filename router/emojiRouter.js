@@ -11,4 +11,6 @@ router.get('/getUserCategory', RULE.validatorUserCategory, API.getUserCategory)
 router.post('/saveUserCategory', RULE.validatorSaveUserCategory, API.saveUserCategory)
 // 删除用户类别
 router.delete('/deleteUserCategory', RULE.validatorDeleteUserCategory, API.deleteUserCategory)
+// 更新用户类别
+router.put('/updateUserCategory', RULE.validatorSaveUserCategory, API.updateUserCategory)
 module.exports = router

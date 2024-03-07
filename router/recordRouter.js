@@ -10,7 +10,7 @@ router.post('/saveRecord', RULE.validatorSave, API.saveRecord)
 router.delete('/deleteRecordById', RULE.validatorDelById, API.deleteRecordById)
 
 // 修改单条记账记录
-router.patch('/updateRecord', RULE.validatorSave, API.updateRecord)
+router.put('/updateRecord', RULE.validatorSave, API.updateRecord)
 
 // 获取单条记账记录
 router.get('/findRecordById', RULE.validatorFindById, API.findRecordById)

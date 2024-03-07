@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { jwtAuth } = require('../utils/userjwt'); // 引入jwt认证函数
+const { jwtAuth } = require('../utils/userjwt') // 引入jwt认证函数
 const recordRouter = require('./recordRouter')
 const userRouter = require('./userRouter')
 const emojiRouter = require('./emojiRouter')
-const extractUserId = require('../utils/apicommon')
+const apiUtils = require('../utils/apiUtils')
 const { CODE_TOKEN_EXPIRED, CODE, MSG } = require('../utils/constant')
+router.use(apiUtils.limiter) // 注入节流模块
 router.use(jwtAuth) // 注入认证模块
-router.use(extractUserId)
+router.use(apiUtils.extractUserId)
 router.use(process.env.BASE_API, recordRouter) // 注入记录路由模块
 router.use(process.env.BASE_API, userRouter) // 注入用户路由模块
 router.use(process.env.BASE_API, emojiRouter) // 注入emoji路由模块
